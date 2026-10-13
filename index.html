@@ -161,13 +161,6 @@
   .red:active { transform: translate(0.125rem, 0.125rem); box-shadow: 0.1rem 0.1rem 0 #000; }
   .red:focus-visible { outline: 0.25rem solid var(--green); outline-offset: 0.2rem; }
 
-  .red.destacado { background: var(--red); border-color: #ffffff; box-shadow: 0.3rem 0.3rem 0 #ffffff; }
-  .red.destacado .ico { fill: #ffffff; }
-  .red.destacado .dato { color: #fee2e2; }
-  .red.destacado:hover, .red.destacado:focus-visible { background: #ffffff; color: #000000; border-color: var(--red); box-shadow: 0.4rem 0.4rem 0 var(--red); }
-  .red.destacado:hover .ico, .red.destacado:focus-visible .ico { fill: var(--red); }
-  .red.destacado:hover .dato, .red.destacado:focus-visible .dato { color: #4b5563; }
-  .red.destacado:hover .flecha, .red.destacado:focus-visible .flecha { stroke: #000000; }
 
   .franja {
     display: flex;
@@ -209,7 +202,7 @@
     <h2 id="contacto-titulo">¡Ándale, haz tu pedido!</h2>
     <ul class="redes">
       <li>
-        <a class="red destacado" id="link-pedidosya" href="https://www.pedidosya.com.gt/" target="_blank" rel="noopener">
+        <a class="red" id="link-pedidosya" href="https://www.pedidosya.com.gt/" target="_blank" rel="noopener">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 7h11.6l1.1 13.2a1 1 0 0 1-1 1.1H6.1a1 1 0 0 1-1-1.1L6.2 7Zm2.3 2v1.5a1 1 0 0 0 2 0V9h3v1.5a1 1 0 0 0 2 0V9h.2l-.8-4.2a3 3 0 0 0-5.9 0L8.4 9h.1Zm1.9-.2h3.2l-.4-2.1a1.5 1.5 0 0 0-2.4 0l-.4 2.1Z"/></svg>
           <span class="txt"><span class="nombre">Pedidos Ya</span><span class="dato">Pide a domicilio</span></span>
           <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
