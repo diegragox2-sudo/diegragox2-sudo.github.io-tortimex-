@@ -252,6 +252,81 @@
   .aviso p strong { color: #ffffff; }
   .pedido { width: 100%; display: flex; flex-direction: column; gap: 0.9rem; }
 
+  /* Menú por páginas: lista de nombre y precio */
+  .carta { width: 100%; display: flex; flex-direction: column; gap: 1.1rem; }
+  .carta-cab { text-align: center; display: flex; flex-direction: column; gap: 0.3rem; }
+  .carta-cab h1 { margin: 0; font-size: 2.1rem; font-weight: 800; line-height: 1.1; }
+  .carta-sub { margin: 0; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); }
+
+  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+  .chip {
+    appearance: none;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.45rem 0.95rem;
+    background: transparent;
+    color: #ffffff;
+    border: 0.125rem solid #ffffff;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .chip:hover { border-color: var(--green); color: var(--green); }
+  .chip[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: #ffffff; }
+  .chip:focus-visible, .pbtn:focus-visible { outline: 0.25rem solid var(--green); outline-offset: 0.15rem; }
+
+  .hoja {
+    background: #111814;
+    border: 0.1875rem solid #ffffff;
+    border-radius: 1.1rem;
+    box-shadow: 0.375rem 0.375rem 0 var(--green);
+    padding: 1.1rem 1.1rem 0.4rem;
+  }
+  .js .pagina { display: none; }
+  .js .pagina.activa { display: block; }
+  .pag-titulo { margin: 0 0 0.35rem; font-size: 1.2rem; font-weight: 800; color: var(--green); letter-spacing: 0.02em; }
+  .lista { list-style: none; margin: 0; padding: 0; }
+  .fila {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-top: 1px dashed rgba(255, 255, 255, 0.25);
+  }
+  .fila-txt { min-width: 0; display: flex; flex-direction: column; }
+  .fila-nombre { font-weight: 700; line-height: 1.25; }
+  .fila-pres { font-size: 0.8125rem; color: var(--muted); }
+  .fila-precio { flex: none; display: flex; align-items: baseline; gap: 0.5rem; white-space: nowrap; font-size: 1.1rem; }
+  .fila-precio b { font-weight: 800; color: #ffffff; }
+  .fila-precio .antes { font-size: 0.85rem; color: var(--muted); }
+
+  .paginador { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  .pbtn {
+    appearance: none;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--red);
+    color: #ffffff;
+    border: 0.1875rem solid #ffffff;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.12s ease, opacity 0.12s ease;
+  }
+  .pbtn svg { width: 1rem; height: 1rem; fill: none; stroke: #ffffff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .pbtn:hover:not(:disabled) { transform: translateY(-2px); }
+  .pbtn:disabled { opacity: 0.35; cursor: default; }
+  .cuenta { font-size: 0.875rem; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .nota-precios { margin: 0; font-size: 0.8rem; text-align: center; color: var(--muted); text-wrap: balance; }
+  .pedido .red { padding: 1.1rem 1.15rem; }
+  @media (prefers-reduced-motion: reduce) { .chip, .pbtn { transition: none; } .pbtn:hover:not(:disabled) { transform: none; } }
+
   .franja {
     display: flex;
     width: 7.5rem;
@@ -296,10 +371,116 @@
     </span>
   </a>
 
-  <section class="aviso" aria-labelledby="menu-titulo">
-    <span class="insignia">Muy pronto</span>
-    <h1 id="menu-titulo">Nuestro menú</h1>
-    <p>Todavía no está listo para verse en esta página. Mientras tanto, <strong>mira todos nuestros productos y haz tu pedido por Pedidos Ya.</strong></p>
+  <section class="carta" aria-labelledby="menu-titulo">
+    <header class="carta-cab">
+      <h1 id="menu-titulo">Nuestro menú</h1>
+      <p class="carta-sub">Elige una categoría</p>
+    </header>
+    <div class="chips" role="group" aria-label="Categorías del menú"><button type="button" class="chip" data-ir="0" id="chip-promo">Promo</button><button type="button" class="chip" data-ir="1" id="chip-tortilla">Tortilla de máquina</button><button type="button" class="chip" data-ir="2" id="chip-frituras">Frituras y lácteos</button><button type="button" class="chip" data-ir="3" id="chip-bebidas">Bebidas</button></div>
+    <div class="hoja">
+    <section class="pagina" id="pag-promo" data-i="0" aria-labelledby="t-promo">
+      <h2 class="pag-titulo" id="t-promo">Promo CompartamosYa</h2>
+      <ul class="lista">
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Promo - Bolsas de Taco Pequeño Simple</span><span class="fila-pres">6 unidades · 8 % de descuento</span></span>
+          <span class="fila-precio"><s class="antes">Q75</s><b>Q69</b></span>
+        </li>
+      </ul>
+    </section>
+    <section class="pagina" id="pag-tortilla" data-i="1" aria-labelledby="t-tortilla">
+      <h2 class="pag-titulo" id="t-tortilla">Tortilla de máquina</h2>
+      <ul class="lista">
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Tortilla Grande No.14</span><span class="fila-pres">1/2 lb</span></span>
+          <span class="fila-precio"><b>Q5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Tortilla Grande No.14</span><span class="fila-pres">1 lb</span></span>
+          <span class="fila-precio"><b>Q10</b></span>
+        </li>
+      </ul>
+    </section>
+    <section class="pagina" id="pag-frituras" data-i="2" aria-labelledby="t-frituras">
+      <h2 class="pag-titulo" id="t-frituras">Frituras y lácteos</h2>
+      <ul class="lista">
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Tostada Pequeña No.10</span><span class="fila-pres">25 unidades</span></span>
+          <span class="fila-precio"><b>Q10.5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Tostada Mediana No.12</span><span class="fila-pres">25 unidades</span></span>
+          <span class="fila-precio"><b>Q17.5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Tostada Grande No.14</span><span class="fila-pres">25 unidades</span></span>
+          <span class="fila-precio"><b>Q19</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Tostada Jumbo No.16</span><span class="fila-pres">25 unidades</span></span>
+          <span class="fila-precio"><b>Q22.5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Taco Pequeño Simple</span><span class="fila-pres">25 unidades</span></span>
+          <span class="fila-precio"><b>Q12.5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Taco Grande Simple</span><span class="fila-pres">25 unidades</span></span>
+          <span class="fila-precio"><b>Q22.5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Nacho Simple</span><span class="fila-pres">1 lb</span></span>
+          <span class="fila-precio"><b>Q22.5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Pizzerolas</span><span class="fila-pres">1 lb</span></span>
+          <span class="fila-precio"><b>Q22.5</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Canastas</span><span class="fila-pres">12 unidades</span></span>
+          <span class="fila-precio"><b>Q15</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Chalupas</span><span class="fila-pres">10 unidades</span></span>
+          <span class="fila-precio"><b>Q15</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Queso Seco</span><span class="fila-pres">113 g</span></span>
+          <span class="fila-precio"><b>Q15</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Queso Pita</span><span class="fila-pres">1/2 lb</span></span>
+          <span class="fila-precio"><b>Q25.5</b></span>
+        </li>
+      </ul>
+    </section>
+    <section class="pagina" id="pag-bebidas" data-i="3" aria-labelledby="t-bebidas">
+      <h2 class="pag-titulo" id="t-bebidas">Bebidas</h2>
+      <ul class="lista">
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Bebida Maní Max (cremita)</span><span class="fila-pres">Botella 500 ml</span></span>
+          <span class="fila-precio"><b>Q15</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Bebida Maní Max (manía)</span><span class="fila-pres">Botella 500 ml</span></span>
+          <span class="fila-precio"><b>Q15</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Gaseosa Coca-Cola lata</span><span class="fila-pres">354 ml</span></span>
+          <span class="fila-precio"><b>Q8</b></span>
+        </li>
+        <li class="fila">
+          <span class="fila-txt"><span class="fila-nombre">Gaseosa Coca-Cola Pet</span><span class="fila-pres">2 L</span></span>
+          <span class="fila-precio"><b>Q25.5</b></span>
+        </li>
+      </ul>
+    </section>
+    </div>
+    <nav class="paginador" aria-label="Cambiar de página del menú">
+      <button type="button" class="pbtn" id="ant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Anterior</button>
+      <span class="cuenta" id="cuenta" aria-live="polite">1 de 4</span>
+      <button type="button" class="pbtn" id="sig">Siguiente<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </nav>
+    <p class="nota-precios">Precios en quetzales, tomados de Pedidos Ya. Pueden cambiar sin previo aviso.</p>
   </section>
 
   <section class="pedido" aria-label="Pedir por Pedidos Ya">
@@ -307,7 +488,7 @@
       <li>
         <a class="red" id="link-pedidosya" href="https://www.pedidosya.com.gt/restaurantes/quezaltenango/tortimex-74e59d4c-b973-413f-960b-450b1ec5f4fc-menu" target="_blank" rel="noopener">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 7h11.6l1.1 13.2a1 1 0 0 1-1 1.1H6.1a1 1 0 0 1-1-1.1L6.2 7Zm2.3 2v1.5a1 1 0 0 0 2 0V9h3v1.5a1 1 0 0 0 2 0V9h.2l-.8-4.2a3 3 0 0 0-5.9 0L8.4 9h.1Zm1.9-.2h3.2l-.4-2.1a1.5 1.5 0 0 0-2.4 0l-.4 2.1Z"/></svg>
-          <span class="txt"><span class="nombre">Pide por Pedidos Ya</span><span class="dato">Mira el menú y pide a domicilio</span></span>
+          <span class="txt"><span class="nombre">Pide por Pedidos Ya</span><span class="dato">Pide a domicilio</span></span>
           <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
         </a>
       </li>
@@ -331,5 +512,35 @@
   <p class="pie">© 2026 TortiMex™<br>Todos los derechos reservados</p>
 </main>
 
+<script>
+  (function () {
+    document.documentElement.classList.add("js");
+    var ids = ['promo', 'tortilla', 'frituras', 'bebidas'];
+    var pags = document.querySelectorAll(".pagina");
+    var chips = document.querySelectorAll(".chip");
+    var ant = document.getElementById("ant");
+    var sig = document.getElementById("sig");
+    var cuenta = document.getElementById("cuenta");
+    var actual = 0;
+    function mostrar(i, mover) {
+      actual = Math.max(0, Math.min(pags.length - 1, i));
+      pags.forEach(function (p, n) { p.classList.toggle("activa", n === actual); });
+      chips.forEach(function (c, n) { c.setAttribute("aria-pressed", n === actual ? "true" : "false"); });
+      ant.disabled = actual === 0;
+      sig.disabled = actual === pags.length - 1;
+      cuenta.textContent = (actual + 1) + " de " + pags.length;
+      try { history.replaceState(null, "", "#" + ids[actual]); } catch (e) {}
+      if (mover) {
+        var quieto = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.getElementById("menu-titulo").scrollIntoView({ behavior: quieto ? "auto" : "smooth", block: "start" });
+      }
+    }
+    chips.forEach(function (c) { c.addEventListener("click", function () { mostrar(Number(c.getAttribute("data-ir")), false); }); });
+    ant.addEventListener("click", function () { mostrar(actual - 1, true); });
+    sig.addEventListener("click", function () { mostrar(actual + 1, true); });
+    var h = (location.hash || "").replace("#", "");
+    mostrar(Math.max(0, ids.indexOf(h)), false);
+  })();
+</script>
 </body>
 </html>
