@@ -113,7 +113,7 @@
   .logo-card:active { transform: translate(0.1875rem, 0.1875rem); box-shadow: 0.1rem 0.1rem 0 var(--red); }
   .logo-card:focus-visible { outline: 0.25rem solid var(--green); outline-offset: 0.3rem; }
 
-  /* Botón del menú dentro de la tarjeta del logo: vidrio oscuro con borde tricolor giratorio */
+  /* Botón del menú dentro de la tarjeta del logo */
   @property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
   .logo-cta {
     --ang: 0deg;
@@ -183,7 +183,7 @@
   @keyframes empuje { 0%, 100% { transform: translateX(-2px); } 50% { transform: translateX(3px); } }
   @keyframes giro { to { --ang: 360deg; } }
 
-  /* Entrada suave al abrir la página */
+  /* Entrada suave */
   @keyframes entra { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: none; } }
   .page > * { animation: entra 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   .page > :nth-child(2) { animation-delay: 0.08s; }
@@ -232,13 +232,16 @@
     box-shadow: 0.3rem 0.3rem 0 var(--green);
     color: var(--paper);
     text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
     transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
   }
   .red .ico { width: 1.85rem; height: 1.85rem; flex: none; fill: var(--green); transition: fill 0.15s ease; }
-  .red .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .red .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; text-align: left; }
   .red .nombre { font-family: "Lilita One", sans-serif; font-size: 1.2rem; line-height: 1.2; letter-spacing: 0.02em; }
   .red .dato { font-size: 0.9rem; font-weight: 600; color: var(--muted); overflow-wrap: anywhere; transition: color 0.15s ease; }
-  .red .flecha { width: 1.2rem; height: 1.2rem; flex: none; fill: none; stroke: #ffffff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.15s ease; }
+  .red .flecha { width: 1.2rem; height: 1.2rem; flex: none; fill: none; stroke: #ffffff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.15s ease, transform 0.2s ease; }
   
   .red:hover, .red:focus-visible {
     background: var(--red);
@@ -253,6 +256,39 @@
   .red:active { transform: translate(0.125rem, 0.125rem); box-shadow: 0.1rem 0.1rem 0 #000; }
   .red:focus-visible { outline: 0.25rem solid var(--green); outline-offset: 0.2rem; }
 
+  /* Acordeón para la cuenta */
+  .cuenta-container { width: 100%; display: flex; flex-direction: column; gap: 0.5rem; }
+  .cuenta-detalles {
+    display: none;
+    background: #111814;
+    border: 0.1875rem solid #ffffff;
+    border-radius: 0.85rem;
+    box-shadow: 0.3rem 0.3rem 0 var(--red);
+    padding: 1.25rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: entra 0.3s ease both;
+  }
+  .cuenta-detalles.activo { display: flex; }
+  .banco-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  .banco-val { font-size: 1.15rem; font-weight: 700; color: #ffffff; margin: 0; }
+  .banco-num { font-size: 1.4rem; font-weight: 800; color: var(--green); letter-spacing: 0.05em; margin: 0; }
+  
+  .btn-copiar {
+    background: var(--red);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.6rem;
+    padding: 0.8rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0.3rem 0.6rem rgba(230, 57, 70, 0.4);
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .btn-copiar:hover { background: #d02e3b; }
+  .btn-copiar:active { transform: scale(0.98); }
 
   .franja {
     display: flex;
@@ -282,7 +318,7 @@
 </head>
 <body>
 
-<!-- Elementos de comida detallados (tacos, burritos, nachos) en los laterales -->
+<!-- Elementos de comida en los laterales -->
 <div class="food-bg-left" aria-hidden="true"></div>
 <div class="food-bg-right" aria-hidden="true"></div>
 
@@ -332,6 +368,36 @@
           <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
         </a>
       </li>
+      <!-- Sección de Cuenta de Depósito -->
+      <li>
+        <div class="cuenta-container">
+          <button class="red" id="btn-toggle-cuenta" type="button" aria-expanded="false">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7l10-5 10 5v2H2V7zm2 4h16v9H4v-9zm2 2v5h2v-5H6zm4 0v5h2v-5h-2zm4 0v5h2v-5h-2z"/></svg>
+            <span class="txt"><span class="nombre">Cuenta de depósito</span><span class="dato">Banrural</span></span>
+            <svg class="flecha" id="flecha-cuenta" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          
+          <div class="cuenta-detalles" id="info-cuenta">
+            <div>
+              <p class="banco-label">Banco</p>
+              <p class="banco-val">Banrural</p>
+            </div>
+            <div>
+              <p class="banco-label">Tipo de cuenta</p>
+              <p class="banco-val">Cuenta Monetaria</p>
+            </div>
+            <div>
+              <p class="banco-label">A nombre de</p>
+              <p class="banco-val">GRUPO GUATEXICO S.A.</p>
+            </div>
+            <div>
+              <p class="banco-label">Número de cuenta</p>
+              <p class="banco-num">3556039169</p>
+            </div>
+            <button class="btn-copiar" id="btn-copiar" type="button">¡Copiar datos de cuenta!</button>
+          </div>
+        </div>
+      </li>
     </ul>
   </section>
 
@@ -343,12 +409,51 @@
   (function () {
     var card = document.getElementById("link-menu");
     var cta = card && card.querySelector(".logo-cta");
-    if (!cta) return;
-    card.addEventListener("pointermove", function (e) {
-      var r = cta.getBoundingClientRect();
-      cta.style.setProperty("--mx", (e.clientX - r.left) + "px");
-      cta.style.setProperty("--my", (e.clientY - r.top) + "px");
-    });
+    if (cta) {
+      card.addEventListener("pointermove", function (e) {
+        var r = cta.getBoundingClientRect();
+        cta.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        cta.style.setProperty("--my", (e.clientY - r.top) + "px");
+      });
+    }
+
+    // Funcionalidad del acordeón de la cuenta
+    var btnToggle = document.getElementById("btn-toggle-cuenta");
+    var infoCuenta = document.getElementById("info-cuenta");
+    var flechaCuenta = document.getElementById("flecha-cuenta");
+
+    if (btnToggle && infoCuenta) {
+      btnToggle.addEventListener("click", function () {
+        var isOpen = infoCuenta.classList.toggle("activo");
+        btnToggle.setAttribute("aria-expanded", isOpen);
+        flechaCuenta.style.transform = isOpen ? "rotate(180deg)" : "rotate(0deg)";
+      });
+    }
+
+    // Copiar TODOS los datos de la cuenta juntos
+    var btnCopiar = document.getElementById("btn-copiar");
+
+    if (btnCopiar) {
+      btnCopiar.addEventListener("click", function () {
+        var textoCompleto = 
+          "Banco: Banrural\n" +
+          "Tipo de cuenta: Cuenta Monetaria\n" +
+          "A nombre de: GRUPO GUATEXICO S.A.\n" +
+          "Número de cuenta: 3556039169";
+
+        navigator.clipboard.writeText(textoCompleto).then(function () {
+          var originalText = btnCopiar.textContent;
+          btnCopiar.textContent = "¡Datos copiados!";
+          btnCopiar.style.background = "#10b981"; // Cambia a verde
+          setTimeout(function () {
+            btnCopiar.textContent = originalText;
+            btnCopiar.style.background = "";
+          }, 2000);
+        }).catch(function (err) {
+          console.error("Error al copiar: ", err);
+        });
+      });
+    }
   })();
 </script>
 </body>
