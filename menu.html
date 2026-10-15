@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menú TortiMex</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: #000000;
+    --paper: #ffffff;
+    --red: #e63946;
+    --green: #10b981;
+    --muted: #9ca3af;
+    --font-body: "Figtree", system-ui, sans-serif;
+  }
+
+  html, body { min-height: 100%; background-color: var(--bg); color: var(--paper); }
+  body {
+    position: relative;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    padding-block: 5rem 3rem;
+    padding-inline: 1rem;
+    overflow-x: hidden;
+  }
+
+  /* Contenedores de fondo con los bocetos de comida detallados */
+  .food-bg-left, .food-bg-right, .chalio-center-bg {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .food-bg-left {
+    top: 0;
+    left: 0;
+    width: 40vw;
+    height: 100vh;
+    opacity: 0.9;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 1000' fill='none' stroke='%2310b981' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- Tacos, burritos y nachos verdes (lado izq) --%3E%3Cpath d='M60 80 C80 50 140 70 150 110 C140 130 90 120 60 80 Z' /%3E%3Cpath d='M75 90 C90 75 125 85 130 105' /%3E%3Cpath d='M40 180 Q80 160 110 200 L80 235 Q50 215 40 180 Z' /%3E%3Cpath d='M50 190 L90 215' /%3E%3Cpath d='M45 205 L75 225' /%3E%3Cpath d='M80 290 L40 340 L110 350 Z' /%3E%3Cpath d='M95 315 L60 360 L120 375 Z' stroke-dasharray='4 2' /%3E%3Cpath d='M50 440 C30 420 80 390 110 420 C130 450 90 480 50 440 Z' /%3E%3Cpath d='M65 435 Q75 425 90 440' /%3E%3Cpath d='M40 530 C70 510 120 530 130 560 L100 590 C70 570 40 560 40 530 Z' /%3E%3Cpath d='M90 640 L50 690 L110 700 Z' /%3E%3Cpath d='M50 720 L30 760 L75 770 Z' /%3E%3Cpath d='M85 755 L65 790 L105 805 Z' /%3E%3Cpath d='M40 850 Q70 830 100 870 L75 900 Q45 880 40 850 Z' /%3E%3Cpath d='M60 940 C40 920 80 890 110 920 C120 940 90 960 60 940 Z' /%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+  }
+
+  .food-bg-right {
+    top: 0;
+    right: 0;
+    width: 40vw;
+    height: 100vh;
+    opacity: 0.9;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 1000' fill='none' stroke='%23e63946' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- Tacos, burritos y nachos rojos (lado der) --%3E%3Cpath d='M340 80 C320 50 260 70 250 110 C260 130 310 120 340 80 Z' /%3E%3Cpath d='M325 90 C310 75 275 85 270 105' /%3E%3Cpath d='M360 180 Q320 160 290 200 L320 235 Q350 215 360 180 Z' /%3E%3Cpath d='M350 190 L310 215' /%3E%3Cpath d='M320 290 L360 340 L290 350 Z' /%3E%3Cpath d='M305 315 L340 360 L280 375 Z' stroke-dasharray='4 2' /%3E%3Cpath d='M350 440 C370 420 320 390 290 420 C270 450 310 480 350 440 Z' /%3E%3Cpath d='M335 435 Q325 425 310 440' /%3E%3Cpath d='M360 530 C330 510 280 530 270 560 L300 590 C330 570 360 560 360 530 Z' /%3E%3Cpath d='M310 640 L350 690 L290 700 Z' /%3E%3Cpath d='M350 720 L370 760 L325 770 Z' /%3E%3Cpath d='M315 755 L335 790 L295 805 Z' /%3E%3Cpath d='M360 850 Q330 830 300 870 L325 900 Q355 880 360 850 Z' /%3E%3Cpath d='M340 940 C360 920 320 890 290 920 C280 940 310 960 340 940 Z' /%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+  }
+
+  .page {
+    position: relative;
+    z-index: 10;
+    max-width: 30rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.25rem;
+  }
+
+  .banderines {
+    position: absolute;
+    top: -5rem;
+    left: 0;
+    right: 0;
+    height: 3.2rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='48'%3E%3Cpath d='M0 4H90' stroke='%23ffffff' stroke-width='2'/%3E%3Cg stroke='%23000000' stroke-width='1.5' stroke-linejoin='round'%3E%3Cpath d='M3 4h24v26l-3 4-3-4-3 4-3-4-3 4-3-4-3 4-3-4z' fill='%23e63946'/%3E%3Cpath d='M33 4h24v26l-3 4-3-4-3 4-3-4-3 4-3-4-3 4-3-4z' fill='%23ffffff'/%3E%3Cpath d='M63 4h24v26l-3 4-3-4-3 4-3-4-3 4-3-4-3 4-3-4z' fill='%2310b981'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: center top;
+    background-size: auto 3.2rem;
+  }
+
+  .logo-card {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(12, 16, 14, 0.92);
+    backdrop-filter: blur(8px);
+    border: 0.1875rem solid #ffffff;
+    border-radius: 1.5rem;
+    padding: 1.25rem 1rem 1.5rem;
+    box-shadow: 0.375rem 0.375rem 0 var(--green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    color: var(--paper);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .logo-card:hover, .logo-card:focus-visible {
+    transform: translate(-0.125rem, -0.125rem);
+    box-shadow: 0.5rem 0.5rem 0 var(--red);
+  }
+  .logo-card:active { transform: translate(0.1875rem, 0.1875rem); box-shadow: 0.1rem 0.1rem 0 var(--red); }
+  .logo-card:focus-visible { outline: 0.25rem solid var(--green); outline-offset: 0.3rem; }
+
+  /* Invitación a tocar el logo */
+  .logo-cta {
+    width: 100%;
+    margin-top: 0.9rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.15s ease;
+  }
+  .logo-cta .punta {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--red);
+    display: grid;
+    place-items: center;
+    transition: background-color 0.15s ease;
+  }
+  .logo-cta .punta svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: empuje 1.8s ease-in-out infinite;
+    transition: stroke 0.15s ease;
+  }
+  .logo-card:hover .logo-cta, .logo-card:focus-visible .logo-cta { color: #ffffff; }
+  .logo-card:hover .punta, .logo-card:focus-visible .punta { background: #ffffff; }
+  .logo-card:hover .punta svg, .logo-card:focus-visible .punta svg { stroke: var(--red); }
+  @keyframes empuje { 0%, 100% { transform: translateX(-1px); } 50% { transform: translateX(2px); } }
+
+  .logo-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.3rem;
+    background: linear-gradient(90deg, var(--green), var(--paper), var(--red));
+  }
+
+  .logo-img {
+    width: 100%;
+    max-width: 24rem;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0.25rem 0.75rem rgba(0, 0, 0, 0.8));
+  }
+
+  .contacto { width: 100%; display: flex; flex-direction: column; gap: 1rem; }
+  .contacto h2 {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    text-align: center;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+  }
+  .redes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.9rem; }
+  
+  .red {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: #111814;
+    border: 0.1875rem solid #ffffff;
+    border-radius: 0.85rem;
+    box-shadow: 0.3rem 0.3rem 0 var(--green);
+    color: var(--paper);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .red .ico { width: 1.85rem; height: 1.85rem; flex: none; fill: var(--green); transition: fill 0.15s ease; }
+  .red .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .red .nombre { font-family: "Lilita One", sans-serif; font-size: 1.2rem; line-height: 1.2; letter-spacing: 0.02em; }
+  .red .dato { font-size: 0.9rem; font-weight: 600; color: var(--muted); overflow-wrap: anywhere; transition: color 0.15s ease; }
+  .red .flecha { width: 1.2rem; height: 1.2rem; flex: none; fill: none; stroke: #ffffff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.15s ease; }
+  
+  .red:hover, .red:focus-visible {
+    background: var(--red);
+    border-color: #000;
+    color: #ffffff;
+    transform: translate(-0.125rem, -0.125rem);
+    box-shadow: 0.4rem 0.4rem 0 #000;
+  }
+  .red:hover .ico, .red:focus-visible .ico { fill: #ffffff; }
+  .red:hover .dato, .red:focus-visible .dato { color: #fee2e2; }
+  .red:hover .flecha, .red:focus-visible .flecha { stroke: #ffffff; }
+  .red:active { transform: translate(0.125rem, 0.125rem); box-shadow: 0.1rem 0.1rem 0 #000; }
+  .red:focus-visible { outline: 0.25rem solid var(--green); outline-offset: 0.2rem; }
+
+
+  /* Página del menú: aviso temporal */
+  .aviso {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(12, 16, 14, 0.92);
+    border: 0.1875rem solid #ffffff;
+    border-radius: 1.5rem;
+    padding: 1.75rem 1.25rem 1.5rem;
+    box-shadow: 0.375rem 0.375rem 0 var(--red);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    text-align: center;
+  }
+  .insignia {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    background: var(--red);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+  .aviso h1 { margin: 0; font-size: 2rem; font-weight: 800; line-height: 1.1; text-wrap: balance; }
+  .aviso p { margin: 0; max-width: 24rem; color: #d1d5db; text-wrap: balance; }
+  .aviso p strong { color: #ffffff; }
+  .pedido { width: 100%; display: flex; flex-direction: column; gap: 0.9rem; }
+
+  .franja {
+    display: flex;
+    width: 7.5rem;
+    height: 0.75rem;
+    border: 0.1875rem solid #ffffff;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0.2rem 0.2rem 0 var(--red);
+    margin-inline: auto;
+  }
+  .franja span { flex: 1; }
+  .franja .fg { background: var(--green); }
+  .franja .fw { background: var(--paper); }
+  .franja .fr { background: var(--red); }
+
+  .pie { margin: 0; font-weight: 600; text-align: center; color: var(--muted); text-wrap: balance; font-size: 0.95rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .red, .red .ico, .red .dato, .red .flecha { transition: none; }
+    .red:hover, .red:focus-visible, .red:active { transform: none; }
+    .logo-card, .logo-cta .punta svg { transition: none; animation: none; }
+    .logo-card:hover, .logo-card:focus-visible, .logo-card:active { transform: none; }
+  }
+  .pedido .red { padding: 1.1rem 1.15rem; }
+  .pedido .red .nombre { font-size: 1.3rem; }
+</style>
+</head>
+<body>
+
+<!-- Elementos de comida detallados (tacos, burritos, nachos) en los laterales -->
+<div class="food-bg-left" aria-hidden="true"></div>
+<div class="food-bg-right" aria-hidden="true"></div>
+
+<div class="banderines" aria-hidden="true"></div>
+
+<main class="page">
+  <a class="logo-card" id="link-inicio" href="index.html" aria-label="TortiMex. Volver al inicio">
+    <img src="logo.png" alt="TortiMex - ¡El maíz que te hace feliz!" class="logo-img">
+    <span class="logo-cta">
+      <span class="punta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+      Volver al inicio
+    </span>
+  </a>
+
+  <section class="aviso" aria-labelledby="menu-titulo">
+    <span class="insignia">Muy pronto</span>
+    <h1 id="menu-titulo">Nuestro menú</h1>
+    <p>Todavía no está listo para verse en esta página. Mientras tanto, <strong>mira todos nuestros productos y haz tu pedido por Pedidos Ya.</strong></p>
+  </section>
+
+  <section class="pedido" aria-label="Pedir por Pedidos Ya">
+    <ul class="redes">
+      <li>
+        <a class="red" id="link-pedidosya" href="https://www.pedidosya.com.gt/restaurantes/quezaltenango/tortimex-74e59d4c-b973-413f-960b-450b1ec5f4fc-menu" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 7h11.6l1.1 13.2a1 1 0 0 1-1 1.1H6.1a1 1 0 0 1-1-1.1L6.2 7Zm2.3 2v1.5a1 1 0 0 0 2 0V9h3v1.5a1 1 0 0 0 2 0V9h.2l-.8-4.2a3 3 0 0 0-5.9 0L8.4 9h.1Zm1.9-.2h3.2l-.4-2.1a1.5 1.5 0 0 0-2.4 0l-.4 2.1Z"/></svg>
+          <span class="txt"><span class="nombre">Pide por Pedidos Ya</span><span class="dato">Mira el menú y pide a domicilio</span></span>
+          <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="contacto" aria-labelledby="contacto-titulo">
+    <h2 id="contacto-titulo">¿Dudas? ¡Escríbenos!</h2>
+    <ul class="redes">
+      <li>
+        <a class="red" id="link-whatsapp" href="https://wa.me/50236746214" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 4.54 0 8.23 3.69 8.23 8.23s-3.69 8.24-8.23 8.24Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.07-.1-.23-.16-.48-.28Z"/></svg>
+          <span class="txt"><span class="nombre">WhatsApp</span><span class="dato">3674-6214</span></span>
+          <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <div class="franja" aria-hidden="true"><span class="fg"></span><span class="fw"></span><span class="fr"></span></div>
+  <p class="pie">© 2026 TortiMex™<br>Todos los derechos reservados</p>
+</main>
+
+</body>
+</html>
