@@ -88,11 +88,12 @@
 
   .logo-card {
     width: 100%;
+    box-sizing: border-box;
     background: rgba(12, 16, 14, 0.92);
     backdrop-filter: blur(8px);
     border: 0.1875rem solid #ffffff;
     border-radius: 1.5rem;
-    padding: 1.25rem 1rem;
+    padding: 1.25rem 1rem 1.5rem;
     box-shadow: 0.375rem 0.375rem 0 var(--green);
     display: flex;
     flex-direction: column;
@@ -100,7 +101,61 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    color: var(--paper);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
+  .logo-card:hover, .logo-card:focus-visible {
+    transform: translate(-0.125rem, -0.125rem);
+    box-shadow: 0.5rem 0.5rem 0 var(--red);
+  }
+  .logo-card:active { transform: translate(0.1875rem, 0.1875rem); box-shadow: 0.1rem 0.1rem 0 var(--red); }
+  .logo-card:focus-visible { outline: 0.25rem solid var(--green); outline-offset: 0.3rem; }
+
+  /* Invitación a tocar el logo */
+  .logo-cta {
+    width: 100%;
+    margin-top: 0.9rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.15s ease;
+  }
+  .logo-cta .punta {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--red);
+    display: grid;
+    place-items: center;
+    transition: background-color 0.15s ease;
+  }
+  .logo-cta .punta svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: empuje 1.8s ease-in-out infinite;
+    transition: stroke 0.15s ease;
+  }
+  .logo-card:hover .logo-cta, .logo-card:focus-visible .logo-cta { color: #ffffff; }
+  .logo-card:hover .punta, .logo-card:focus-visible .punta { background: #ffffff; }
+  .logo-card:hover .punta svg, .logo-card:focus-visible .punta svg { stroke: var(--red); }
+  @keyframes empuje { 0%, 100% { transform: translateX(-1px); } 50% { transform: translateX(2px); } }
 
   .logo-card::after {
     content: "";
@@ -186,6 +241,8 @@
   @media (prefers-reduced-motion: reduce) {
     .red, .red .ico, .red .dato, .red .flecha { transition: none; }
     .red:hover, .red:focus-visible, .red:active { transform: none; }
+    .logo-card, .logo-cta .punta svg { transition: none; animation: none; }
+    .logo-card:hover, .logo-card:focus-visible, .logo-card:active { transform: none; }
   }
 </style>
 </head>
@@ -198,15 +255,19 @@
 <div class="banderines" aria-hidden="true"></div>
 
 <main class="page">
-  <header class="logo-card">
+  <a class="logo-card" id="link-menu" href="menu.html" aria-label="TortiMex. Haz clic y conoce nuestro menú">
     <img src="logo.png" alt="TortiMex - ¡El maíz que te hace feliz!" class="logo-img">
-  </header>
+    <span class="logo-cta">
+      Haz clic y conoce nuestro menú
+      <span class="punta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </span>
+  </a>
 
   <section class="contacto" aria-labelledby="contacto-titulo">
     <h2 id="contacto-titulo">¡Ándale, haz tu pedido!</h2>
     <ul class="redes">
       <li>
-        <a class="red" id="link-pedidosya" href="https://www.pedidosya.com.gt/" target="_blank" rel="noopener">
+        <a class="red" id="link-pedidosya" href="https://www.pedidosya.com.gt/restaurantes/quezaltenango/tortimex-74e59d4c-b973-413f-960b-450b1ec5f4fc-menu" target="_blank" rel="noopener">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.2 7h11.6l1.1 13.2a1 1 0 0 1-1 1.1H6.1a1 1 0 0 1-1-1.1L6.2 7Zm2.3 2v1.5a1 1 0 0 0 2 0V9h3v1.5a1 1 0 0 0 2 0V9h.2l-.8-4.2a3 3 0 0 0-5.9 0L8.4 9h.1Zm1.9-.2h3.2l-.4-2.1a1.5 1.5 0 0 0-2.4 0l-.4 2.1Z"/></svg>
           <span class="txt"><span class="nombre">Pedidos Ya</span><span class="dato">Pide a domicilio</span></span>
           <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
@@ -237,7 +298,7 @@
   </section>
 
   <div class="franja" aria-hidden="true"><span class="fg"></span><span class="fw"></span><span class="fr"></span></div>
-  <p class="pie">Tortillas, nachos, tostadas, chalupas y mucho más.</p>
+  <p class="pie">© 2026 TortiMex™<br>Todos los derechos reservados</p>
 </main>
 
 </body>
